@@ -1,1 +1,1 @@
-export {userRouter} from "./user.ts";
+export { userRouter } from './user.ts'
