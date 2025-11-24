@@ -1,5 +1,5 @@
 import express from 'express'
-import {userRouter} from "./routers";
+import { userRouter } from './routers'
 
 const app = express()
 
@@ -12,9 +12,7 @@ app.get('/health', (req, res) => {
   })
 })
 
-
-
-app.use('/api/users', userRouter);
+app.use('/api/users', userRouter)
 
 export { app }
 
