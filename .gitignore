@@ -10,7 +10,7 @@ logs/
 
 # Environment variables
 .env
-.env.*
+.env*
 
 # OS files
 .DS_Store
@@ -39,4 +39,5 @@ coverage/
 data/
 *.sqlite
 *.db
-logfileg
+
+logfile
