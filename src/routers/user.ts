@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { prisma } from '../lib/prisma'
+import { userIdSchema } from '../schemas/userSchemas.ts'
+import { validateParams } from '../middleware/validation'
 
 const userRouter = Router()
 
@@ -7,7 +9,7 @@ userRouter.get('/', (req, res) => {
   res.send('User endpoint is working')
 })
 
-userRouter.get('/:userId', async (req, res) => {
+userRouter.get('/:userId', validateParams(userIdSchema), async (req, res) => {
   const { userId } = req.params
   try {
     const user = await prisma.user.findUnique({ where: { id: parseInt(userId) } })
