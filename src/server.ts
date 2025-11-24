@@ -1,4 +1,5 @@
 import express from 'express'
+import {userRouter} from "./routers";
 
 const app = express()
 
@@ -7,9 +8,13 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
     timestamp: new Date().toISOString(),
-    service: 'Habit Tracker API',
+    service: 'Node express course api',
   })
 })
+
+
+
+app.use('/api/users', userRouter);
 
 export { app }
 
