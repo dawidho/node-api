@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { hashPassword } from '../utils/password.ts'
+import { comparePassword, hashPassword } from '../utils/password.ts'
 import { prisma } from '../lib/prisma.ts'
 import { generateToken } from '../utils/jwt.ts'
 
@@ -26,6 +26,28 @@ export const register = async (req: Request, res: Response) => {
     res.status(201).json({ message: 'User registered successfully', user, token })
   } catch (error) {
     console.error('Registration error:', error)
+    res.status(500)
+  }
+}
+
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body
+    const user = await prisma.user.findUnique({
+      where: { email },
+    })
+    if (!user) {
+      return res.status(401).json({ message: 'invalid credentials' })
+    }
+    const isPasswordValid = await comparePassword(password, user.password)
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'invalid credentials' })
+    }
+
+    const token = await generateToken(user)
+    res.status(200).json({ message: 'Login successful', user, token })
+  } catch (error) {
+    console.error('Login error:', error)
     res.status(500)
   }
 }

@@ -9,3 +9,8 @@ export const userSchema = z.object({
 export const userIdSchema = z.object({
   userId: z.coerce.number().int().positive('User ID must be a positive integer'),
 })
+
+export const userLoginSchema = z.object({
+  email: z.email('Invalid email format'),
+  password: z.string().min(1),
+})
