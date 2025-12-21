@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { prisma } from '../lib/prisma'
 import { userIdSchema } from '../schemas/userSchemas.ts'
 import { validateParams } from '../middleware/validation'
+import { register } from '../controllers/authController.ts'
 
 const userRouter = Router()
 
