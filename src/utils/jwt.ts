@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify, decodeJwt } from 'jose'
+import { decodeJwt, jwtVerify, SignJWT } from 'jose'
 import { createSecretKey } from 'crypto'
 import env from '../../env.ts'
 
@@ -9,7 +9,6 @@ export interface JwtPayload {
 }
 
 export const generateToken = async (payload: JwtPayload): Promise<string> => {
-  console.log('GEN Token:', payload)
   const secret = process.env.JWT_SECRET
   if (!secret) {
     throw new Error('JWT_SECRET environment variable is not set')

@@ -27,12 +27,7 @@ export const validateBody = (schema: z.ZodTypeAny) => {
       next()
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorObject = JSON.parse(error.message)
-
-        return res.status(400).json({
-          error: 'Validation failed',
-          details: errorObject.map((err) => err.message).join(', '),
-        })
+        next()
       }
       next(error)
     }
