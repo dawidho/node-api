@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import * as jwtUtils from '../../utils/jwt'
 
-const payload = { id: '1', email: 'test@example.com', username: 'testuser' }
+const payload = { id: 1, email: 'test@example.com', username: 'testuser' }
 
 describe('jwt utils', () => {
   it('should generate and verify a token', async () => {

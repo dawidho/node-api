@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from 'express'
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack)
-  let status = err.status || 500
+  let status = (err as any).status || 500
   let message = err.message || 'Internal Server Error'
 
   if (err.name === 'ValidationError') {

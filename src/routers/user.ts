@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { userIdSchema } from '../schemas/userSchemas.ts'
+import { userIdSchema } from '../schemas/userSchemas'
 import { validateParams } from '../middleware/validation'
 import { deleteUser, getAllUsers, getUserById, updateUser } from '../controllers/userController'
 

@@ -1,4 +1,4 @@
-export { userRouter } from './user.ts'
-export { authRouter } from './auth.ts'
-export { habitRouter } from './habit.ts'
+export { userRouter } from './user'
+export { authRouter } from './auth'
+export { habitRouter } from './habit'
 export { paymentsRouter } from './payments'

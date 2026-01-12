@@ -1,7 +1,7 @@
-import type { Request, Response } from 'express'
-import { comparePassword, hashPassword } from '../utils/password.ts'
-import { prisma } from '../lib/prisma.ts'
-import { generateToken } from '../utils/jwt.ts'
+import { Request, Response } from 'express'
+import { comparePassword, hashPassword } from '../utils/password'
+import { prisma } from '../lib/prisma'
+import { generateToken } from '../utils/jwt'
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -22,7 +22,11 @@ export const register = async (req: Request, res: Response) => {
         throw error
       })
 
-    const token = await generateToken(user)
+    const token = await generateToken({
+      id: user.id,
+      email: user.email,
+      username: user.name, // zakładam, że name to username
+    })
     res.status(201).json({ message: 'User registered successfully', user, token })
   } catch (error) {
     console.error('Registration error:', error)
@@ -50,7 +54,11 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'invalid credentials' })
     }
 
-    const token = await generateToken(user)
+    const token = await generateToken({
+      id: user.id,
+      email: user.email,
+      username: user.name,
+    })
     delete user.password
     res.status(200).json({ message: 'Login successful', user, token })
   } catch (error) {

@@ -1,11 +1,12 @@
 import { decodeJwt, jwtVerify, SignJWT } from 'jose'
 import { createSecretKey } from 'crypto'
-import env from '../../env.ts'
+import env from '../../env'
 
 export interface JwtPayload {
-  id: string
+  id: number
   email: string
   username: string
+  [key: string]: any
 }
 
 export const generateToken = async (payload: JwtPayload): Promise<string> => {
@@ -28,7 +29,7 @@ export const verifyToken = async (token: string): Promise<JwtPayload> => {
   const { payload } = await jwtVerify(token, secretKey)
 
   return {
-    id: payload.id as string,
+    id: payload.id as number,
     email: payload.email as string,
     username: payload.username as string,
   }
@@ -38,7 +39,7 @@ export const decodeToken = (token: string): JwtPayload | null => {
   try {
     const payload = decodeJwt(token)
     return {
-      id: payload.id as string,
+      id: payload.id as number,
       email: payload.email as string,
       username: payload.username as string,
     }

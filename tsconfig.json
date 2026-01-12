@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "noEmit": true,
     "target": "esnext",
     "module": "ESNext",
-    "rewriteRelativeImportExtensions": true,
-    "erasableSyntaxOnly": true,
-    "verbatimModuleSyntax": true,
-    "allowImportingTsExtensions": true,
-    "types": ["vitest/globals"],
-    "allowSyntheticDefaultImports": true
-  }
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": ["vitest/globals"]
+  },
+  "include": ["src", "env.ts", "prisma.config.ts", "eslint.config.ts", "vitest.config.ts"]
 }

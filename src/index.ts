@@ -1,5 +1,5 @@
-import { env } from '../env.ts'
-import app from './server.ts'
+import { env } from '../env'
+import app from './server'
 
 app.listen(env.PORT, () => {
   console.log(`Server running on port ${env.PORT}`)

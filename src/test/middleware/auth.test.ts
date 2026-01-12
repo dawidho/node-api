@@ -23,7 +23,7 @@ describe('authenticateToken middleware', () => {
 
   it('should set req.user and call next if token valid', async () => {
     const req: any = { headers: { authorization: 'Bearer goodtoken' } }
-    const payload = { id: '1', email: 'a', username: 'b' }
+    const payload = { id: 1, email: 'a', username: 'b' }
     vi.spyOn(jwtUtils, 'verifyToken').mockResolvedValueOnce(payload)
     await authenticateToken(req, res, next)
     expect(req.user).toEqual(payload)

@@ -1,5 +1,5 @@
 import { prisma } from '../lib/prisma'
-import { chargeSchema } from '../schemas/chargeSchemas.ts'
+import { chargeSchema } from '../schemas/chargeSchemas'
 
 function errorResponse(code: string, message: string) {
   return {
@@ -14,7 +14,7 @@ export async function chargeUser(req, res) {
   try {
     const parse = chargeSchema.safeParse(req.body)
     if (!parse.success) {
-      return res.status(400).json(errorResponse('VALIDATION_ERROR', parse.error.errors[0].message))
+      return res.status(400).json(errorResponse('VALIDATION_ERROR', parse.error.issues[0].message))
     }
     const { userId, amount, description } = parse.data
     const user = await prisma.user.findUnique({ where: { id: Number(userId) } })

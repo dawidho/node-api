@@ -13,6 +13,7 @@ export default defineConfig({
       },
     },
     coverage: {
+      provider: 'v8',
       exclude: [
         'generated/**',
         'generated/**/*',

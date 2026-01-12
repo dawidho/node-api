@@ -6,9 +6,9 @@ import {
   getHabits,
   updateHabit,
 } from '../controllers/habitController'
-import { validateBody } from '../middleware/validation.ts'
-import { createHabitSchema } from '../schemas/habitSchemas.ts'
-import { authenticateToken } from '../middleware/auth.ts'
+import { validateBody } from '../middleware/validation'
+import { createHabitSchema } from '../schemas/habitSchemas'
+import { authenticateToken } from '../middleware/auth'
 
 const habitRouter = Router()
 
