@@ -1,5 +1,5 @@
 import express from 'express'
-import { authRouter, habitRouter, userRouter } from './routers'
+import * as routers from './routers'
 import { errorHandler } from './middleware/errorHandler.ts'
 
 const app = express()
@@ -14,9 +14,10 @@ app.get('/health', (req, res) => {
 })
 
 app.use(express.json())
-app.use('/api/users', userRouter)
-app.use('/api/auth', authRouter)
-app.use('/api/habits', habitRouter)
+app.use('/api/users', routers.userRouter)
+app.use('/api/auth', routers.authRouter)
+app.use('/api/habits', routers.habitRouter)
+app.use(routers.paymentsRouter)
 
 app.use(errorHandler)
 

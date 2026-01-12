@@ -3,8 +3,6 @@ import * as jwtUtils from '../../utils/jwt'
 
 const payload = { id: '1', email: 'test@example.com', username: 'testuser' }
 
-// Note: JWT_SECRET must be set in env for these tests to work
-
 describe('jwt utils', () => {
   it('should generate and verify a token', async () => {
     const token = await jwtUtils.generateToken(payload)

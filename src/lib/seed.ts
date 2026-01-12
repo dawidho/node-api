@@ -3,6 +3,7 @@ import { prisma } from './prisma'
 async function main() {
   await prisma.habit.deleteMany({})
   await prisma.user.deleteMany({})
+  await prisma.charge.deleteMany({})
 
   const user1 = await prisma.user.create({
     data: {
@@ -19,7 +20,6 @@ async function main() {
     },
   })
 
-  // Dodaj przykładowe nawyki
   await prisma.habit.create({
     data: {
       userId: user1.id,
@@ -38,6 +38,21 @@ async function main() {
       frequency: 'daily',
       targetCount: 1,
       isActive: true,
+    },
+  })
+
+  await prisma.charge.create({
+    data: {
+      userId: user1.id,
+      amount: 50.0,
+      description: 'Opłata za usługę A',
+    },
+  })
+  await prisma.charge.create({
+    data: {
+      userId: user2.id,
+      amount: 75.5,
+      description: 'Opłata za usługę B',
     },
   })
 

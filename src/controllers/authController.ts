@@ -35,6 +35,12 @@ export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body
     const user = await prisma.user.findUnique({
       where: { email },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+      },
     })
     if (!user) {
       return res.status(401).json({ message: 'invalid credentials' })
@@ -45,6 +51,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = await generateToken(user)
+    delete user.password
     res.status(200).json({ message: 'Login successful', user, token })
   } catch (error) {
     console.error('Login error:', error)

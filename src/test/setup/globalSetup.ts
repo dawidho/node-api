@@ -5,11 +5,10 @@ export default async function setup() {
   console.log('🗄️  Setting up test database...')
 
   try {
-    // Clean all data from tables to ensure clean state
+    await prisma.charge.deleteMany({})
     await prisma.habit.deleteMany({})
     await prisma.user.deleteMany({})
 
-    // Use Prisma CLI to reset and migrate the database
     console.log('🚀 Resetting and migrating schema using Prisma...')
     execSync('npx prisma migrate reset --force --skip-seed --schema=prisma/schema.prisma', {
       stdio: 'inherit',
@@ -17,7 +16,6 @@ export default async function setup() {
       env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL },
     })
 
-    // Opcjonalnie: seedowanie bazy
     try {
       console.log('🌱 Seeding test database...')
       execSync('tsx src/lib/seed.ts', {
@@ -42,6 +40,7 @@ export default async function setup() {
 
     try {
       // Final cleanup - delete all test data
+      await prisma.charge.deleteMany({})
       await prisma.habit.deleteMany({})
       await prisma.user.deleteMany({})
 

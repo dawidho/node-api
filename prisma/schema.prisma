@@ -14,6 +14,7 @@ model User {
   name     String
   password String
   habits   Habit[]
+  charges  Charge[]
 }
 
 model Habit {
@@ -27,4 +28,13 @@ model Habit {
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Charge {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Decimal
+  description String?
+  createdAt   DateTime @default(now())
 }
