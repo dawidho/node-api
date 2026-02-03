@@ -1,0 +1,22 @@
+{
+  "name": "@microservices/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "zod": "^4.1.13",
+    "amqplib": "^0.10.3"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.1",
+    "@types/node": "^20.19.25",
+    "@types/express": "^4.17.21",
+    "typescript": "^5.9.2"
+  }
+}
+
