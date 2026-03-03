@@ -17,9 +17,7 @@ if (isDevelopment) {
 // Define the schema with environment-specific requirements
 const envSchema = z.object({
   // Node environment
-  NODE_ENV: z
-    .enum(['development', 'production', 'test'])
-    .default('development'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 
   APP_STAGE: z.enum(['dev', 'production', 'test']).default('dev'),
 
@@ -73,7 +71,7 @@ try {
     console.error(JSON.stringify(error.flatten().fieldErrors, null, 2))
 
     // More detailed error messages
-    error.errors.forEach((err) => {
+    error.issues.forEach((err) => {
       const path = err.path.join('.')
       console.error(`  ${path}: ${err.message}`)
     })
