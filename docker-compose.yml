@@ -1,0 +1,143 @@
+version: '3.8'
+
+services:
+  # Baza danych dla Auth Service
+  auth-db:
+    image: postgres:15-alpine
+    container_name: auth-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Baza danych dla User Service
+  user-db:
+    image: postgres:15-alpine
+    container_name: user-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Baza danych dla Payment Service
+  payment-db:
+    image: postgres:15-alpine
+    container_name: payment-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: payment_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - payment-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Baza danych dla Habit Service
+  habit-db:
+    image: postgres:15-alpine
+    container_name: habit-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: habit_db
+    ports:
+      - "5436:5432"
+    volumes:
+      - habit-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgresql://user:password@auth-db:5432/auth_db
+      JWT_SECRET: your-secret-key-here
+      PAYMENT_SERVICE_URL: http://payment-service:3003
+      USER_SERVICE_URL: http://user-service:3002
+    depends_on:
+      - auth-db
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # User Service
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      DATABASE_URL: postgresql://user:password@user-db:5432/user_db
+    depends_on:
+      - user-db
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Payment Service
+  payment-service:
+    build:
+      context: ./services/payment-service
+      dockerfile: Dockerfile
+    container_name: payment-service
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+      DATABASE_URL: postgresql://user:password@payment-db:5432/payment_db
+    depends_on:
+      - payment-db
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Habit Service
+  habit-service:
+    build:
+      context: ./services/habit-service
+      dockerfile: Dockerfile
+    container_name: habit-service
+    ports:
+      - "3004:3004"
+    environment:
+      PORT: 3004
+      DATABASE_URL: postgresql://user:password@habit-db:5432/habit_db
+    depends_on:
+      - habit-db
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  auth-db-data:
+  user-db-data:
+  payment-db-data:
+  habit-db-data:
